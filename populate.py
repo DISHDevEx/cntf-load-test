@@ -2,7 +2,7 @@ import subprocess
 import random
 import time
 
-# Generate random 10-digit number for IMSI
+# Generate random 10-digit number for IMSI to populate
 def generate_random_imsi():
     digits = 10
     current_time = int(time.time())
