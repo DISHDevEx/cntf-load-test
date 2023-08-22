@@ -29,7 +29,7 @@ run_helm_commands() {
     $helm_upgrade_command
 }
 
-for _ in {1..1000}; do
+for _ in {1..10}; do
     imsi_id=$(generate_random_imsi)
     echo "Subscribing UE with IMSI: ${imsi_id}"
 
