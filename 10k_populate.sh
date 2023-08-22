@@ -14,11 +14,11 @@ generate_random_imsi() {
 run_helm_commands() {
     imsi_id=$1
 
-    helm_template_command="helm template -n openverso ueransim-ues-smoke-test openverso/ueransim-ues \
+    helm_template_command="helm template -n openverso ueransim-10k-test openverso/ueransim-ues \
         --set ues.initialMSISDN=${imsi_id} \
         --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
 
-    helm_upgrade_command="helm -n openverso upgrade --install ueransim-ues-smoke-test openverso/ueransim-ues \
+    helm_upgrade_command="helm -n openverso upgrade --install ueransim-10k-test openverso/ueransim-ues \
         --set ues.initialMSISDN=${imsi_id} \
         --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
 
