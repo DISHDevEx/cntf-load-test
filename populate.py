@@ -71,12 +71,12 @@ def subscribe_ue_to_network(imsi_id):
             ["kubectl", "-n", "openverso", "exec", populate_pod_name, "--", "open5gs-dbctl", "add_ue_with_slice", imsi_id, "465B5CE8B199B49FAA5F0A2EE238A6BC", "E8ED289DEBA952E4283B54E88E6183CA", "internet", "1", imsi_id]
         )
 
-        imsi_ids_filename = "imsi_ids.txt"
-        try:
-            with open(imsi_ids_filename, "a") as imsi_file:
-                imsi_file.write(imsi_id + "\n")
-        except Exception as e:
-            print("Error writing to imsi_ids.txt:", e)
+        # imsi_ids_filename = "imsi_ids.txt"
+        # try:
+        #     with open(imsi_ids_filename, "a") as imsi_file:
+        #         imsi_file.write(imsi_id + "\n")
+        # except Exception as e:
+        #     print("Error writing to imsi_ids.txt:", e)
     else:
         print("Failed to get populate pod name")
 
