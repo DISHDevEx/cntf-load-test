@@ -74,7 +74,7 @@ ue_populate_10k_random:
     - ./get_helm.sh
   script: 
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    - python3 populate.py
+    - 10k_populate.sh
 
 
 cleanup:
