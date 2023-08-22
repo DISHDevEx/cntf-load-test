@@ -47,8 +47,6 @@ cleanup:
   variables:
     REGION: us-east-1
     CLUSTER_NAME: cntf-open5gs-cluster
-  needs:
-    - artifacts: true
   stage: cleanup
   when: manual
   environment:
