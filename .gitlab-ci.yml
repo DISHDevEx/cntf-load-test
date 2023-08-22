@@ -15,9 +15,9 @@ ue_populate_10k_random:
     CLUSTER_NAME: cntf-open5gs-cluster
   environment: 
     name: open5gs_cluster
-  artifacts:
-    paths:
-      - IMSI_IDs.txt  # Changed artifact name to indicate multiple IDs
+  # artifacts:
+  #   paths:
+  #     - IMSI_IDs.txt  # Changed artifact name to indicate multiple IDs
   before_script:
     # Install dependencies and connect to cluster
     - apt update
