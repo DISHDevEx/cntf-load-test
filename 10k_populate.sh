@@ -41,10 +41,11 @@ ue_populate() {
   fi
 }
 for _ in {1..10}; do
-    imsi_id=$(generate_random_imsi)
-    ue_populate $imsi_id
+    # imsi_id=$(generate_random_imsi)
+    generate_random_imsi
+    ue_populate 
     echo "Subscribing UE with IMSI: ${imsi_id}"
-    run_helm_commands $imsi_id
+    run_helm_commands 
     echo "Allocating IMSI: ${imsi_id} to UE with helm"
 done
 
