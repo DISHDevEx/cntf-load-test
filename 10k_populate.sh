@@ -1,4 +1,4 @@
-#!/bin/bash
+#!usr/bin/env bash
 
 generate_random_imsi() {
     digits=10
