@@ -40,7 +40,7 @@ run_helm_commands() {
     $helm_upgrade_command
 }
 
-10k_populate() {
+populate() {
     for _ in {1..10}; do
         id=$(generate_imsi)
         ue_populate "$id"
@@ -48,4 +48,4 @@ run_helm_commands() {
     done
 }
 
-10k_populate
+populate
