@@ -40,7 +40,7 @@ ue_populate() {
     kubectl -n openverso exec $populate_pod_name -- open5gs-dbctl add_ue_with_slice $imsi_id 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
   fi
 }
-for _ in {1..10000}; do
+for _ in {1..10}; do
     # imsi_id=$(generate_random_imsi)
     generate_random_imsi
     ue_populate 
