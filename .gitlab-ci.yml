@@ -26,8 +26,8 @@ install_open5gs_and_ueransim:
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
     - kubectl apply -f cntf_tests_namespace.yaml
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    - helm upgrade --install cntf-open5gs openverso/open5gs --namespace cntf_tests --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/5gSA_ues_values.yaml
-    - helm upgrade --install cntf-ueransim-gng openverso/ueransim-gnb --namespace cntf_tests --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
+    - helm upgrade --install cntf-open5gs openverso/open5gs --namespace cntf-tests --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/5gSA_ues_values.yaml
+    - helm upgrade --install cntf-ueransim-gnb openverso/ueransim-gnb --namespace cntf-tests --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
 
 
 ue_populate_10k_random:
@@ -51,12 +51,13 @@ ue_populate_10k_random:
     - chmod +x kubectl
     - mv kubectl /usr/local/bin/
     - aws eks update-kubeconfig --name $CLUSTER_NAME --region $REGION
-    - POPULATE_POD=$(kubectl -n cntf_tests get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
+    - POPULATE_POD=$(kubectl -n cntf-tests get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
     - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
     - chmod +x get_helm.sh
     - ./get_helm.sh
   script: 
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
+    # HERE YOU NEED TO COPY THE 10K POPULATE BASH SCRIPT INTO THE POPULATE POD AND EXECUTE IT!!!
     - sh ./10k_populate.sh
 
 cleanup:
@@ -82,7 +83,9 @@ cleanup:
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     - POPULATE_POD=$(kubectl -n openverso get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
     - kubectl -n openverso exec $POPULATE_POD -n openverso -- open5gs-dbctl reset
-
+    - helm  --uninstall cntf-open5gs openverso/open5gs --namespace cntf-tests 
+    - helm  --uninstall cntf-ueransim-gnb openverso/ueransim-gnb --namespace cntf-tests 
+    - kubectl delete namespace cntf-tests
 
  
     
