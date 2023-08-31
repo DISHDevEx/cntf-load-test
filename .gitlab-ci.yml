@@ -82,7 +82,7 @@ cleanup:
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     - POPULATE_POD=$(kubectl -n cntf-tests get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
-    - kubectl -n cntf-tests exec $POPULATE_POD -n openverso -- open5gs-dbctl reset
+    - kubectl -n cntf-tests exec $POPULATE_POD -- open5gs-dbctl reset
     - helm  --uninstall cntf-open5gs openverso/open5gs --namespace cntf-tests 
     - helm  --uninstall cntf-ueransim-gnb openverso/ueransim-gnb --namespace cntf-tests 
     - kubectl delete namespace cntf-tests
