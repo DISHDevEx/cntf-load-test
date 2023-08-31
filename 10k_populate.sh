@@ -40,17 +40,109 @@ run_helm_commands() {
     $helm_upgrade_command
 }
 
-populate() {
-    for _ in {1..10}; do
+batch1() {
+    for _ in {1..1000}; do
         id=$(generate_imsi)
         ue_populate "$id"
         run_helm_commands "$id"
     done
 }
 
-populate > 10k_results.json
+batch1 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
 
-#!usr/bin/env bash
+batch2() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch2 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+batch3() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch3 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+batch4() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch4 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+batch5() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch5 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+batch6() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch6 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+batch7() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch7 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+batch8() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch8 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+batch9() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch9 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+batch10() {
+    for _ in {1..1000}; do
+        id=$(generate_imsi)
+        ue_populate "$id"
+        run_helm_commands "$id"
+    done
+}
+
+batch10 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
+
+
+
+# !usr/bin/env bash
 
 # generate_random_imsi() {
 #     digits=10
