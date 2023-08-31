@@ -14,10 +14,10 @@ generate_imsi() {
 ue_populate() {
     local id="$1"
     echo "command ue_populate running with ${id}"
-    populate_pod_name=$(kubectl -n openverso get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
+    populate_pod_name=$(kubectl -n cntf-tests get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
 
     if [ $? -eq 0 ]; then 
-        kubectl -n openverso exec $populate_pod_name -- open5gs-dbctl add_ue_with_slice $id 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
+        kubectl -n cntf-tests exec $populate_pod_name -- open5gs-dbctl add_ue_with_slice $id 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
     fi
 }
 
@@ -25,11 +25,11 @@ run_helm_commands() {
     local id="$1"
     echo "command helm running with ${id}"
 
-    helm_template_command="helm template -n openverso ueransim-10k-test openverso/ueransim-ues \
+    helm_template_command="helm template -n cntf-tests ueransim-10k-test openverso/ueransim-ues \
         --set ues.initialMSISDN=${id} \
         --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
 
-    helm_upgrade_command="helm -n openverso upgrade --install ueransim-10k-test openverso/ueransim-ues \
+    helm_upgrade_command="helm -n cntf-tests upgrade --install ueransim-10k-test openverso/ueransim-ues \
         --set ues.initialMSISDN=${id} \
         --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
 
@@ -40,7 +40,7 @@ run_helm_commands() {
     $helm_upgrade_command
 }
 
-batch1() {
+test() {
     for _ in {1..1000}; do
         id=$(generate_imsi)
         ue_populate "$id"
@@ -48,98 +48,7 @@ batch1() {
     done
 }
 
-batch1 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch2() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch2 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch3() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch3 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch4() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch4 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch5() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch5 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch6() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch6 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch7() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch7 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch8() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch8 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch9() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch9 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
-batch10() {
-    for _ in {1..1000}; do
-        id=$(generate_imsi)
-        ue_populate "$id"
-        run_helm_commands "$id"
-    done
-}
-
-batch10 | jq -c '. + {"test": "load_test"}' | tee -a 10k_results.json
-
+test
 
 
 # !usr/bin/env bash
