@@ -1,7 +1,7 @@
 # CNTF - Load Test
 
 ## Purpose
-This source code repository stores the configurations to load ten thousand User Equipment devices (UEs) on the 5g core network. From loading the core with heavy traffic, this gives insights on how individual network functions are impacted.
+This source code repository stores the configurations to load thousands of User Equipment devices (UEs) on the 5g core network. From loading the core with heavy traffic, this gives insights on how individual network functions are impacted.
 
 ## Deployment
 Prerequisites:
