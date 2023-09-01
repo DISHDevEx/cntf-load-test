@@ -59,7 +59,7 @@ ue_populate_random:
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     # - sleep 120 # this command will allow all the network functions to finish getting set up before executing the below script
     # - sleep 120 # this command will allow all the network functions to finish getting set up before executing the below script
-    - kubectl -n openverso cp ./load_test.sh $POPULATE_POD:/tmp/stress_test.sh
+    - kubectl -n openverso cp ./load_test.sh $POPULATE_POD:/tmp/load_test.sh
     - kubectl -n openverso exec $POPULATE_POD -- bash -c "/tmp/load_test.sh >&1"
    
 cleanup:
