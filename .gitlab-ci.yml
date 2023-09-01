@@ -30,7 +30,7 @@ install_open5gs_and_ueransim:
     - helm upgrade --install cntf-ueransim-gnb openverso/ueransim-gnb --namespace cntf-tests --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
 
 
-ue_populate_10k_random:
+ue_populate_random:
   allow_failure: true
   stage: subscribe
   image: ubuntu:latest
@@ -58,7 +58,7 @@ ue_populate_10k_random:
   script: 
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     - sleep 120 # this command will allow all the network functions to finish getting set up before executing the below script
-    - sh ./10k_populate.sh
+    - sh ./load_test.sh
 
 cleanup:
   image:
