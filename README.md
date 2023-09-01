@@ -7,15 +7,17 @@ This source code repository stores the configurations to load thousands of User 
 Prerequisites:
 
 * *Please ensure that you have configured the AWS CLI to authenticate to an AWS environment where you have adequate permissions to create an EKS cluster, security groups and IAM roles*: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html
-* *Please ensure that the "CNTF-Main" branch has been deployed, as this ensures that the cluster and other necessary AWS infrastructure are available to support the execution of scripts in this repository.*  
+* *Please ensure that the pipeline in the "CNTF-Main" repository has been successfully deployed, as this ensures that all necessary components are available to support the execution of scripts in this repository.*  
+
 
 Steps:
 1. Mirror this repository in Gitlab or connect this repository externally to Gitlab 
 2. Authenticate Gitlab with AWS: https://docs.gitlab.com/ee/ci/cloud_deployment/
-3. In Gitlab, click the drop-down arrow next to "Build" and select "Pipelines"
-4. In the top right hand corner select "Run Pipeline"
-5. In the drop-down under "Run for branch name or tag" select the appropriate name for this branch and click "Run Pipeline"
-6. Once again, click the drop-down arrow next to "Build" and select "Pipelines", you should now see the pipeline being executed
+3. Perform these actions inside of the Gitlab repository:
+    * On the left side of the screen click the drop-down arrow next to "Build" and select "Pipelines"
+    * In the top right hand corner select "Run Pipeline"
+    * In the drop-down under "Run for branch name or tag" select the appropriate branch name and click "Run Pipeline"
+    * Once again, click the drop-down arrow next to "Build" and select "Pipelines", you should now see the pipeline being executed
 
 ## Project structure
 ```
