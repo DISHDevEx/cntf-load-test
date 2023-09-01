@@ -49,6 +49,9 @@ Steps:
 |
 |
 └── s3_test_results_coralogix.py       converts local files into s3 objects 
+|
+|
+└── cntf_tests_namespace.yaml          creates a namespace called "cntf-tests" where a new deployment of ueransim and open5gs is made and is tested via the load_test.sh script
 |  
 |
 └── update_test_results.sh             updates test result data both locally and in aws                                           
