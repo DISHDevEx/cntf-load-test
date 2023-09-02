@@ -86,7 +86,7 @@ run_helm_commands() {
 }
 
 test() {
-    for _ in {1..1000}; do
+    for _ in {1..2000}; do
         id=$(generate_imsi)
         ue_populate "$id"
         run_helm_commands "$id"                   #not sure if this is needed??
