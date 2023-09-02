@@ -55,6 +55,7 @@ ue_populate_random:
     - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
     - chmod +x get_helm.sh
     - ./get_helm.sh
+    - chmod +x load_test.sh
   script: 
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     # - sleep 120 # this command will allow all the network functions to finish getting set up before executing the below script
