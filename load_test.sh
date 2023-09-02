@@ -2,15 +2,16 @@
 
 # commands to install kubectl and helm on the gnb-ues pod
 install_dependencies () {
-    sudo apt-get update
-    sudo apt-get install -y apt-transport-https
-    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/kubernetes-archive-keyring.gpg add -
-    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-    sudo apt-get update
-    sudo apt-get install -y kubectl
-    wget https://get.helm.sh/helm-v3.7.0-linux-amd64.tar.gz
+    apt update
+    apt install -y curl
+    curl --version
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x kubectl
+    mv kubectl /usr/local/bin/
+    kubectl version --client
+    curl -LO https://get.helm.sh/helm-v3.7.0-linux-amd64.tar.gz
     tar -zxvf helm-v3.7.0-linux-amd64.tar.gz
-    sudo mv linux-amd64/helm /usr/local/bin/helm
+    mv linux-amd64/helm /usr/local/bin/helm
     helm version
 }
 
