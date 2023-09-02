@@ -28,13 +28,21 @@ generate_imsi() {
 }
 
 # create a UE that uses the random IMSI_ID number
+# ue_populate() {
+#     local id="$1"
+#     echo "command ue_populate running with ${id}"
+#     populate_pod_name=$(kubectl -n openverso get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
+
+#     if [ $? -eq 0 ]; then 
+#         kubectl -n openverso exec $populate_pod_name -- open5gs-dbctl add_ue_with_slice $id 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
+#     fi
+# }
 ue_populate() {
     local id="$1"
     echo "command ue_populate running with ${id}"
-    populate_pod_name=$(kubectl -n cntf-tests get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
 
     if [ $? -eq 0 ]; then 
-        kubectl -n cntf-tests exec $populate_pod_name -- open5gs-dbctl add_ue_with_slice $id 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
+        -- open5gs-dbctl add_ue_with_slice $id 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
     fi
 }
 
@@ -42,11 +50,11 @@ run_helm_commands() {
     local id="$1"
     echo "command helm running with ${id}"
 
-    helm_template_command="helm template -n cntf-tests ueransim-load-test openverso/ueransim-ues \
+    helm_template_command="helm template -n openverso ueransim-load-test openverso/ueransim-ues \
         --set ues.initialMSISDN=${id} \
         --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
 
-    helm_upgrade_command="helm -n cntf-tests upgrade --install ueransim-load-test openverso/ueransim-ues \
+    helm_upgrade_command="helm -n openverso upgrade --install ueransim-load-test openverso/ueransim-ues \
         --set ues.initialMSISDN=${id} \
         --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
 
