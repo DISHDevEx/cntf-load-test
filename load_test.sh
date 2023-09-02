@@ -64,12 +64,32 @@ ue_populate() {
 #     echo "Running helm upgrade command: ${helm_upgrade_command}"
 #     $helm_upgrade_command
 # }
+run_helm_commands() {
+    local id="$1"
+    echo "command helm running with ${id}"
+
+    helm_template_command="helm template ueransim-load-test openverso/ueransim-ues \
+        --namespace openverso \
+        --set ues.initialMSISDN=${id} \
+        --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
+
+    helm_upgrade_command="helm upgrade --install ueransim-load-test openverso/ueransim-ues \
+        --namespace openverso \
+        --set ues.initialMSISDN=${id} \
+        --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
+
+    echo "Running helm template command: ${helm_template_command}"
+    $helm_template_command
+
+    echo "Running helm upgrade command: ${helm_upgrade_command}"
+    $helm_upgrade_command
+}
 
 test() {
     for _ in {1..1000}; do
         id=$(generate_imsi)
         ue_populate "$id"
-        # run_helm_commands "$id"                   #not sure if this is needed??
+        run_helm_commands "$id"                   #not sure if this is needed??
     done
 }
 
