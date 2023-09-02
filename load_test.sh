@@ -40,36 +40,36 @@ generate_imsi() {
 ue_populate() {
     local id="$1"
     echo "command ue_populate running with ${id}"
-
-    if [ $? -eq 0 ]; then 
-        -- open5gs-dbctl add_ue_with_slice $id 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
-    fi
+    
+    # Assuming you are already inside the pod
+    open5gs-dbctl add_ue_with_slice "$id" 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
 }
 
-run_helm_commands() {
-    local id="$1"
-    echo "command helm running with ${id}"
 
-    helm_template_command="helm template -n openverso ueransim-load-test openverso/ueransim-ues \
-        --set ues.initialMSISDN=${id} \
-        --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
+# run_helm_commands() {
+#     local id="$1"
+#     echo "command helm running with ${id}"
 
-    helm_upgrade_command="helm -n openverso upgrade --install ueransim-load-test openverso/ueransim-ues \
-        --set ues.initialMSISDN=${id} \
-        --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
+#     helm_template_command="helm template -n openverso ueransim-load-test openverso/ueransim-ues \
+#         --set ues.initialMSISDN=${id} \
+#         --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
 
-    echo "Running helm template command: ${helm_template_command}"
-    $helm_template_command
+#     helm_upgrade_command="helm -n openverso upgrade --install ueransim-load-test openverso/ueransim-ues \           # not sure if this function is needed?
+#         --set ues.initialMSISDN=${id} \
+#         --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml"
 
-    echo "Running helm upgrade command: ${helm_upgrade_command}"
-    $helm_upgrade_command
-}
+#     echo "Running helm template command: ${helm_template_command}"
+#     $helm_template_command
+
+#     echo "Running helm upgrade command: ${helm_upgrade_command}"
+#     $helm_upgrade_command
+# }
 
 test() {
     for _ in {1..1000}; do
         id=$(generate_imsi)
         ue_populate "$id"
-        run_helm_commands "$id"
+        # run_helm_commands "$id"                   #not sure if this is needed??
     done
 }
 
