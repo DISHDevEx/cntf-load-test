@@ -1,5 +1,20 @@
 # #!/usr/bin/env bash
 
+# commands to install kubectl and helm on the gnb-ues pod
+install_dependencies () {
+    sudo apt-get update
+    sudo apt-get install -y apt-transport-https
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/kubernetes-archive-keyring.gpg add -
+    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    sudo apt-get update
+    sudo apt-get install -y kubectl
+    wget https://get.helm.sh/helm-v3.7.0-linux-amd64.tar.gz
+    tar -zxvf helm-v3.7.0-linux-amd64.tar.gz
+    sudo mv linux-amd64/helm /usr/local/bin/helm
+    helm version
+}
+
+# generate a random IMSI_ID number
 generate_imsi() {
     digits=10
     current_time=$(date +%s)
@@ -11,6 +26,7 @@ generate_imsi() {
     echo "$imsi_id"
 }
 
+# create a UE that uses the random IMSI_ID number
 ue_populate() {
     local id="$1"
     echo "command ue_populate running with ${id}"
@@ -48,6 +64,7 @@ test() {
     done
 }
 
+install_dependencies
 test
 
 
