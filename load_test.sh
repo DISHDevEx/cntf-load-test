@@ -86,20 +86,10 @@ ue_populate() {
 #     $helm_upgrade_command
 # }
 
-run_helm_commands() {
-    local id="$1"
-    echo "command helm running with ${id}"
-    ue_create_command="ueransim-cli create-ue --imsi ${id}"
-    echo "Running UERANSIM UE creation command: ${ue_create_command}"
-    $ue_create_command
-}
-
-
 test() {
     for _ in {1..10}; do
         id=$(generate_imsi)
         ue_populate "$id"
-        run_helm_commands "$id"                   #not sure if this is needed??
     done
 }
 
