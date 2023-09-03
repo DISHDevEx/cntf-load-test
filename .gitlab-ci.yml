@@ -3,9 +3,12 @@ stages:
   - subscribe
   - deploy
   - cleanup
+  
 
-      
-# install_open5gs_and_ueransim:
+# Install a second deployment of both open5gs and ueransim in a new namespace. This will serve as the environment for the load test. By having two installations, this will give insights on how network functions respond when they face network traffic vs no network traffic.
+
+
+# install_apps_in_new_namespace:
 #   image:
 #     name: alpine/helm
 #     entrypoint: [""]
@@ -61,6 +64,7 @@ ue_populate_random:
     # - sleep 120 # this command will allow all the network functions to finish getting set up before executing the below script
     - kubectl -n openverso cp ./load_test.sh $POPULATE_POD:/tmp/load_test.sh
     - kubectl -n openverso exec $POPULATE_POD -- bash -c "/tmp/load_test.sh >&1"
+
    
 cleanup:
   image:
