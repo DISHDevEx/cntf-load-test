@@ -27,9 +27,9 @@ install_apps_in_new_namespace:
     - chmod +x kubectl
     - mv kubectl /usr/local/bin/
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
-    - kubectl apply -f cntf_tests_namespace.yaml
+    # - kubectl apply -f cntf_tests_namespace.yaml
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    - helm upgrade --install cntf-open5gs openverso/open5gs --namespace openverso --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/5gSA_ues_values.yaml
+    - helm upgrade --install cntf-open5gs openverso/open5gs --namespace openverso --values load_test_values.yaml
     - helm upgrade --install cntf-ueransim-gnb openverso/ueransim-gnb --namespace openverso --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
 
 
