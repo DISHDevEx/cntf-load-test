@@ -30,8 +30,7 @@ install_apps_in_new_namespace:
     # - kubectl apply -f cntf_tests_namespace.yaml
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     - helm upgrade --install cntf-open5gs openverso/open5gs --namespace openverso --values load_test_values.yaml
-    - helm upgrade --install cntf-ueransim-gnb openverso/ueransim-gnb --namespace openverso --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
-
+    - helm upgrade --install cntf-ueransim-gnb openverso/ueransim-gnb --namespace openverso --values cntf_gnb_ues_values.yaml
 
 ue_populate_random:
   allow_failure: true
