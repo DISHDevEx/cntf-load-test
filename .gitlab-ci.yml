@@ -26,7 +26,6 @@ install_apps:
     - mv kubectl /usr/local/bin/
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    - helm uninstall open5gs -n openverso # need to uninstall before reinstalling, because the populate pod gets messed up otherwise
     - helm upgrade --install open5gs openverso/open5gs --namespace openverso --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/5gSA_ues_values.yaml 
     # - helm upgrade --install ueransim-gnb openverso/ueransim-gnb --namespace openverso --values cntf_gnb_ues_values.yaml # install ueransim using a custom values file that has a "count" configuration that allows for thousands of UEs to be created
     - >
