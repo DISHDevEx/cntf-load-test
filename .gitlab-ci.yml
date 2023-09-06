@@ -58,6 +58,7 @@ ue_populate_random:
     - chmod +x load_test.sh
   script: 
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
+    - POPULATE_POD=$(kubectl -n openverso get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
     - kubectl -n openverso cp ./load_test.sh $POPULATE_POD:/tmp/load_test.sh
     - kubectl -n openverso exec $POPULATE_POD -- bash -c "/tmp/load_test.sh >&1"
 
