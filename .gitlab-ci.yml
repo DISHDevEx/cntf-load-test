@@ -26,17 +26,16 @@ install_apps:
     - mv kubectl /usr/local/bin/
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    - helm upgrade --install open5gs openverso/open5gs --namespace openverso --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/5gSA_ues_values.yaml 
     # - helm upgrade --install ueransim-gnb openverso/ueransim-gnb --namespace openverso --values cntf_gnb_ues_values.yaml # install ueransim using a custom values file that has a "count" configuration that allows for thousands of UEs to be created
     - >
       COMMON_LABEL=$(jq -n --arg CI_PIPELINE_ID "$CI_PIPELINE_ID" '{"gitlab-pipeline": $CI_PIPELINE_ID}')
     - >
-      helm template -n openverso ueransim-ues openverso/ueransim-ues \
+      helm template -n openverso ueransim-gnb-ues openverso/ueransim-ues \
         --set ues.initialMSISDN="${IMSI_ID}"   \
         --set-json commonLabels="${COMMON_LABEL}" \
         # --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
     - > 
-      helm -n openverso upgrade --install ueransim-ues openverso/ueransim-ues \
+      helm -n openverso upgrade --install ueransim-gnb-ues openverso/ueransim-ues \
         --set ues.initialMSISDN="${IMSI_ID}"   \
         --set-json commonLabels="${COMMON_LABEL}" \
         # --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
