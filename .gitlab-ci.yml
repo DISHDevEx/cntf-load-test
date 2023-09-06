@@ -8,7 +8,7 @@ stages:
 # Install a second deployment of both open5gs and ueransim in a new namespace. This will serve as the environment for the load test. By having two installations, this will give insights on how network functions respond when they face network traffic vs no network traffic.
 
 
-install_apps_in_new_namespace:
+install_apps_with_new_helm_values:
   image:
     name: alpine/helm
     entrypoint: [""]
@@ -29,8 +29,8 @@ install_apps_in_new_namespace:
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
     # - kubectl apply -f cntf_tests_namespace.yaml
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    - helm upgrade --install open5gs openverso/open5gs --namespace openverso --values load_test_values.yaml
-    - helm upgrade --install ueransim-gnb openverso/ueransim-gnb --namespace openverso --values cntf_gnb_ues_values.yaml
+    - helm upgrade --install open5gs openverso/open5gs --namespace openverso --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/5gSA_ues_values.yaml 
+    - helm upgrade --install ueransim-gnb openverso/ueransim-gnb --namespace openverso --values cntf_gnb_ues_values.yaml # install ueransim using a custom values file that has a "count" configuration that allows for thousands of UEs to be created
 
 ue_populate_random:
   allow_failure: true
@@ -86,11 +86,9 @@ cleanup:
     - mv kubectl /usr/local/bin/
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    - POPULATE_POD=$(kubectl -n openverso get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)  # change namespace to cntf-tests
-    - kubectl -n openverso exec $POPULATE_POD -- open5gs-dbctl reset   # change namespace to cntf-tests
-    # - helm uninstall cntf-open5gs --namespace cntf-tests
-    # - helm uninstall cntf-ueransim-gnb --namespace cntf-tests        # uncomment this section if another app installment is functional
-    # - kubectl delete namespace cntf-tests
+    - POPULATE_POD=$(kubectl -n openverso get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate) 
+    - kubectl -n openverso exec $POPULATE_POD -- open5gs-dbctl reset   
+   
 
  
     
