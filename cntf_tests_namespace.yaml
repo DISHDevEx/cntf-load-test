@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  labels:
-    kubernetes.io/metadata.name: cntf-tests
-  name: cntf-tests
-spec:
-  finalizers:
-  - kubernetes
