@@ -1,14 +1,11 @@
 stages:
   - install_helm
   - subscribe
-  - deploy
   - cleanup
   
+# Install ueransim with a custom helm values file (cntf_gnb_ues_values.yaml) which has a "count" value which allows for thousands of UEs to be deployed
 
-# Install a second deployment of both open5gs and ueransim in a new namespace. This will serve as the environment for the load test. By having two installations, this will give insights on how network functions respond when they face network traffic vs no network traffic.
-
-
-install_apps_with_new_helm_values:
+install_apps:
   image:
     name: alpine/helm
     entrypoint: [""]
@@ -27,10 +24,11 @@ install_apps_with_new_helm_values:
     - chmod +x kubectl
     - mv kubectl /usr/local/bin/
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
-    # - kubectl apply -f cntf_tests_namespace.yaml
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     - helm upgrade --install open5gs openverso/open5gs --namespace openverso --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/5gSA_ues_values.yaml 
     - helm upgrade --install ueransim-gnb openverso/ueransim-gnb --namespace openverso --values cntf_gnb_ues_values.yaml # install ueransim using a custom values file that has a "count" configuration that allows for thousands of UEs to be created
+    - sleep 80 # allow pods to finish creating before executing next stage of pipeline 
+
 
 ue_populate_random:
   allow_failure: true
@@ -60,11 +58,13 @@ ue_populate_random:
     - chmod +x load_test.sh
   script: 
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    # - sleep 120 # this command will allow all the network functions to finish getting set up before executing the below script
     - kubectl -n openverso cp ./load_test.sh $POPULATE_POD:/tmp/load_test.sh
     - kubectl -n openverso exec $POPULATE_POD -- bash -c "/tmp/load_test.sh >&1"
 
-   
+
+# Remove all IMSI_IDs from open5gs database
+
+
 cleanup:
   image:
     name: alpine/helm
