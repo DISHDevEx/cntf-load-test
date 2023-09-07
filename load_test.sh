@@ -33,7 +33,7 @@ ue_populate() {
     echo "command ue_populate running with ${id}"
     
     # Assuming you are already inside the pod
-    open5gs-dbctl add_ue_with_slice "$id" 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111
+    { time -p open5gs-dbctl add_ue_with_slice "$id" 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA internet 1 111111; } 2>&1 | grep real | awk '{print "creation_time_db: " $2}' >> time_to_populate_database.txt
 }
 
 # create 3000 UEs 
