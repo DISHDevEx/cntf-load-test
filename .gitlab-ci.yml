@@ -6,41 +6,41 @@ stages:
   
 # Install ueransim with a custom helm values file (cntf_gnb_ues_values.yaml) which has a "count" value which allows for thousands of UEs to be deployed
 
-install_apps:
-  image:
-    name: alpine/helm
-    entrypoint: [""]
-  stage: install_helm
-  variables:
-    REGION: us-east-1
-    CLUSTER_NAME: cntf-open5gs-cluster
-  environment:
-    name: open5gs_cluster 
-  script:
-    - apk add --no-cache python3 py3-pip jq # need jq to execute installation of ueransim-ues
-    - apk add --no-cache python3 py3-pip 
-    - pip3 install --upgrade pip 
-    - pip3 install --no-cache-dir awscli
-    - aws --version
-    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    - chmod +x kubectl
-    - mv kubectl /usr/local/bin/
-    - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
-    - helm repo add openverso https://gradiant.github.io/openverso-charts/
-    # - helm upgrade --install ueransim-gnb openverso/ueransim-gnb --namespace openverso --values cntf_gnb_ues_values.yaml # install ueransim using a custom values file that has a "count" configuration that allows for thousands of UEs to be created
-    - >
-      COMMON_LABEL=$(jq -n --arg CI_PIPELINE_ID "$CI_PIPELINE_ID" '{"gitlab-pipeline": $CI_PIPELINE_ID}')
-    - >
-      helm template -n openverso ueransim-gnb-ues openverso/ueransim-ues \
-        --set ues.initialMSISDN="${IMSI_ID}"   \
-        --set-json commonLabels="${COMMON_LABEL}" \
-        # --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
-    - > 
-      helm -n openverso upgrade --install ueransim-gnb-ues openverso/ueransim-ues \
-        --set ues.initialMSISDN="${IMSI_ID}"   \
-        --set-json commonLabels="${COMMON_LABEL}" \
-        # --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
-    - sleep 80 # allow pods to finish creating before executing next stage of pipeline 
+# install_apps:
+#   image:
+#     name: alpine/helm
+#     entrypoint: [""]
+#   stage: install_helm
+#   variables:
+#     REGION: us-east-1
+#     CLUSTER_NAME: cntf-open5gs-cluster
+#   environment:
+#     name: open5gs_cluster 
+#   script:
+#     - apk add --no-cache python3 py3-pip jq # need jq to execute installation of ueransim-ues
+#     - apk add --no-cache python3 py3-pip 
+#     - pip3 install --upgrade pip 
+#     - pip3 install --no-cache-dir awscli
+#     - aws --version
+#     - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+#     - chmod +x kubectl
+#     - mv kubectl /usr/local/bin/
+#     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
+#     - helm repo add openverso https://gradiant.github.io/openverso-charts/
+#     # - helm upgrade --install ueransim-gnb openverso/ueransim-gnb --namespace openverso --values cntf_gnb_ues_values.yaml # install ueransim using a custom values file that has a "count" configuration that allows for thousands of UEs to be created
+#     - >
+#       COMMON_LABEL=$(jq -n --arg CI_PIPELINE_ID "$CI_PIPELINE_ID" '{"gitlab-pipeline": $CI_PIPELINE_ID}')
+#     - >
+#       helm template -n openverso ueransim-gnb-ues openverso/ueransim-ues \
+#         --set ues.initialMSISDN="${IMSI_ID}"   \
+#         --set-json commonLabels="${COMMON_LABEL}" \
+#         # --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
+#     - > 
+#       helm -n openverso upgrade --install ueransim-gnb-ues openverso/ueransim-ues \
+#         --set ues.initialMSISDN="${IMSI_ID}"   \
+#         --set-json commonLabels="${COMMON_LABEL}" \
+#         # --values https://raw.githubusercontent.com/DISHDevEx/napp/main/napp/open5gs_values/gnb_ues_values.yaml
+#     - sleep 80 # allow pods to finish creating before executing next stage of pipeline 
 
 
 ue_populate_random:
