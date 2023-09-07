@@ -1,6 +1,7 @@
 stages:
   - install_helm
   - subscribe
+  - update_tests
   - cleanup
   
 # Install ueransim with a custom helm values file (cntf_gnb_ues_values.yaml) which has a "count" value which allows for thousands of UEs to be deployed
@@ -110,7 +111,7 @@ cleanup:
     REGION: us-east-1
     CLUSTER_NAME: cntf-open5gs-cluster
   stage: cleanup
-  when: manual
+  # when: manual            #commenting this out so the cleanup occurs automatically
   environment:
     name: open5gs_cluster
   script:
