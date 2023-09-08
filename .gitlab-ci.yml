@@ -61,7 +61,7 @@ update_test_results:
     - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     - python3 ./s3_test_results_coralogix.py 
-    - sh ./update_s3_test_results.sh 
+    - sh ./update_test_results.sh 
 
 
 # Remove all generated UEs
