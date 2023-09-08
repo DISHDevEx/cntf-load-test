@@ -1,4 +1,7 @@
 # #!/usr/bin/env bash
+set -x # run in debug mode (see every step of script printed on console)
+set -e # quit script as soon as an error occurs
+set -o pipefail # ensure failure of pipe commands is accurately accounted for
 
 # commands to install kubectl and helm on the gnb-ues pod
 install_dependencies () {
