@@ -31,6 +31,8 @@ ue_populate_random:
     - chmod +x get_helm.sh
     - ./get_helm.sh
     - chmod +x load_test.sh
+    - chmod +w time_to_populate_database.txt
+    - kubectl -n openverso cp ./time_to_populate_database.txt $POPULATE_POD:/time_to_populate_database.txt
   script: 
     - helm repo add openverso https://gradiant.github.io/openverso-charts/
     - POPULATE_POD=$(kubectl -n openverso get pod --output=jsonpath={.items..metadata.name} -l app.kubernetes.io/component=populate)
