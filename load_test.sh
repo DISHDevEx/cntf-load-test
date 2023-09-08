@@ -57,7 +57,7 @@ ue_populate() {
 
 # Function to create UEs
 test() {
-    for _ in {1..5}; do
+    for _ in {1..1000}; do
         id=$(generate_imsi)
         ue_populate "$id"
     done
