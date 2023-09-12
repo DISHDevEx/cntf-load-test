@@ -66,3 +66,8 @@ Raw data: To view raw data resulting from test runs, please look at the data sto
 └── time_to_populate_database.txt      local storage file for collecting logs relating to the time it takes for new ues to be registered on the network  
 
 ```
+## Gitlab CI
+**Pipeline Stages:**
+* Subscribe - subscribes thousands of UEs to the network
+* Update_tests - updates test results locally and in AWS
+* Cleanup - removes all UE subscriptions from network database
