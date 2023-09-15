@@ -29,6 +29,7 @@ Steps:
         * Install your created runner via helm: 
         "helm upgrade --install <_RUNNER_NAME_> -n <_NAMESPACE_> --set runnerRegistrationToken=<_RUNNER_TOKEN_> --set gitlabUrl=http://www.gitlab.com gitlab/gitlab-runner"
         * Check to see if your runner is working: "kubectl get pods -n <_NAMESPACE_>" (you should see "1/1" under "READY" and "Running" under "STATUS")
+        * Give your runner cluster-wide permissions: "kubectl apply -f gitlab-runner-rbac.yaml"
     * In Gitlab, Under "Assigned project runners" you should now see that your runner has a green circle next to it, signaling a "ready" status
    * **How to re-use this runner for other CNTF repositories:**
         * Hover over "Settings" and select "CI/CD"
