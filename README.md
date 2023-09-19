@@ -23,15 +23,15 @@ Steps:
     * Copy and save the "runner token" listed under "Step 1"
     * Select "Go to runners page", you should now see your runner listed with a warning sign next to it under "Assigned project runners"
     * On your local terminal:
-        * Install the helm gitlab repository: "helm repo add gitlab https://charts.gitlab.io"
-        * intialize helm (for helm version 2): "helm init" 
-        * create a namespace for your gitlab runner(s) in the cntf cluster: "kubectl create namespace <_NAMESPACE_ (e.g. "gitlab-runners")>"
+        * Install the helm gitlab repository: `helm repo add gitlab https://charts.gitlab.io`
+        * intialize helm (for helm version 2): `helm init` 
+        * create a namespace for your gitlab runner(s) in the cntf cluster: `kubectl create namespace <NAMESPACE (e.g. "gitlab-runners")>`
         * Install your created runner via helm: 
-        "helm upgrade --install <_RUNNER_NAME_> -n <_NAMESPACE_> --set runnerRegistrationToken=<_RUNNER_TOKEN_> gitlabUrl=http://www.gitlab.com gitlab/gitlab-runner"
-        * Check to see if your runner is working: "kubectl get pods -n <_NAMESPACE_>" (you should see "1/1" under "READY" and "Running" under "STATUS")
-        * Give your runner cluster-wide permissions: "kubectl apply -f gitlab-runner-rbac.yaml"
+        `helm upgrade --install <RUNNER_NAME> -n <NAMESPACE> --set runnerRegistrationToken=<RUNNER_TOKEN> gitlabUrl=http://www.gitlab.com gitlab/gitlab-runner`
+        * Check to see if your runner is working: `kubectl get pods -n <NAMESPACE>` (you should see "1/1" under "READY" and "Running" under "STATUS")
+        * Give your runner cluster-wide permissions: `kubectl apply -f gitlab-runner-rbac.yaml`
     * In Gitlab, Under "Assigned project runners" you should now see that your runner has a green circle next to it, signaling a "ready" status
-   * **How to re-use this runner for other CNTF repositories:**
+    * **How to re-use this runner for other CNTF repositories:**
         * Hover over "Settings" and select "CI/CD"
         * Under "Other available runners", find the runner you have created and select "Enable for this project"
 
