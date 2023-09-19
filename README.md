@@ -10,7 +10,7 @@ Prerequisites:
 
 
 Steps:
-1. [Mirror](https://docs.gitlab.com/ee/user/project/repository/mirror/) this repository OR connect it [externally](https://docs.gitlab.com/ee/ci/ci_cd_for_external_repos/) to Gitlab 
+1. [Import](https://docs.gitlab.com/ee/user/project/import/github.html) this repository into Gitlab  
 2. Perform a "Git clone" of this repository on your local machine
 3. Set up a private Gitlab runner on the CNTF EKS cluster (***Note:*** *You only need to do this process once, this runner can be used by the other CNTF repositories you execute*):
     * In Gitlab, on the left side of the screen, hover over "settings" and select "CI/CD"
