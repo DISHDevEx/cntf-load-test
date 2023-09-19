@@ -41,7 +41,7 @@ Steps:
    * Select "Add variable"
    * Under "Key" type: `AWS_ACCESS_KEY_ID`
    * Under "Value", enter the value of your AWS Access key
-   * Repeat steps 3-5 for `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN` with the correct corresponding values
+   * Repeat steps 3-5 for `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN (optional)` with the correct corresponding values
 5. Run the CI/CD pipeline:
     * On the left side of the screen click the drop-down arrow next to "Build" and select "Pipelines"
     * In the top right hand corner select "Run Pipeline"
