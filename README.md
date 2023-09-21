@@ -10,7 +10,7 @@ Prerequisites:
 
 
 Steps:
-1. [Import](https://docs.gitlab.com/ee/user/project/import/github.html) this repository into Gitlab  
+1. Create a fork of this repository and [Import](https://docs.gitlab.com/ee/user/project/import/github.html) it into Gitlab 
 2. Perform a "Git clone" of this repository on your local machine
 3. Set up a private Gitlab runner on the CNTF EKS cluster (***Note:*** *You only need to do this process once, this runner can be used by the other CNTF repositories you execute*):
     * In Gitlab, on the left side of the screen, hover over "settings" and select "CI/CD"
